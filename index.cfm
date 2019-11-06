@@ -2,8 +2,8 @@
 <!--- vvv CF CODE --->
 <cfscript>
     // Accounts
-    // objAccounts = createObject("component","cfc.bdgAccounts").init();
-    // qryAccounts = objAccounts.get_Accounts();
+    objAccounts = createObject("component","cfc.bdgAccounts").init();
+    qryAccounts = objAccounts.get_Accounts();
     // Bills
     objBills = createObject("component","cfc.bdgBills").init();
     qryBills = objBills.get_Bills();
@@ -96,7 +96,14 @@
                     <th>Name</th>
                     <th>Alias</th>
                     <th>Edit</th>
-                </tr>  
+                </tr> 
+                <cfoutput query="qryAccounts">
+                  <tr>
+                      <td>#ACCOUNT_NAME#</td>
+                      <td>#ACCOUNT_ALIAS	#</td>
+                      <td><a class="loadBillData" id="bill_#id#" title="Edit"><i class="far fa-edit text-primary" id="i_#id#"></i></a></td>
+                  </tr>
+                </cfoutput> 
                 <tbody>
                 </tbody>          
               </table>
