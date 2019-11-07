@@ -2,8 +2,8 @@
 <!--- vvv CF CODE --->
 <cfscript>
     // Accounts
-    // objAccounts = createObject("component","cfc.bdgAccounts").init();
-    // qryAccounts = objAccounts.get_Accounts();
+    objAccounts = createObject("component","cfc.bdgAccounts").init();
+    qryAccounts = objAccounts.get_Accounts();
     // Bills
     objBills = createObject("component","cfc.bdgBills").init();
     qryBills = objBills.get_Bills();
@@ -71,8 +71,8 @@
 
     <!-- Header -->
     <header class="bg-primary py-3 mb-3">
-      <div class="container h-20">
-        <div class="row h-20 align-items-center">
+      <div class="container h-10">
+        <div class="row h-10 align-items-center">
           <div class="col-lg-12">
             <h1 class="display-4 text-white mt-5 mb-2">Budget4me 1.0</h1>
             <p class="lead mb-5 text-white-50">Manage and schedule your payments
@@ -96,7 +96,14 @@
                     <th>Name</th>
                     <th>Alias</th>
                     <th>Edit</th>
-                </tr>  
+                </tr> 
+                <cfoutput query="qryAccounts">
+                  <tr>
+                      <td>#ACCOUNT_NAME#</td>
+                      <td>#ACCOUNT_ALIAS#</td>
+                      <td><a class="loadBillData" id="bill_#id#" title="Edit"><i class="far fa-edit text-primary" id="i_#id#"></i></a></td>
+                  </tr>
+                </cfoutput> 
                 <tbody>
                 </tbody>          
               </table>
@@ -141,9 +148,7 @@
                   <th>Event Name</th>
                   <th>Date</th>
                   <th>Edit</th>
-                </tr>
-                  
-
+                </tr>                
                 <cfoutput query="qryCalendars">
                     <tr>
                         <td>#cal_event_name#</td>

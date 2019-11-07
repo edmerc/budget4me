@@ -2,7 +2,7 @@ let data = {};
 // ///////////////////////////////////
 // on document load
 // ///////////////////////////////////
-$(function() {
+$(function () {
     data = {
         // data tables
         tblAccounts: $('#tblAccounts'),
@@ -72,34 +72,34 @@ $(function() {
     // ///////////////////////////////////
     // // bind buttons
     // ///////////////////////////////////
-    $(data.btnOpenAccountModal).on("click", function() {
+    $(data.btnOpenAccountModal).on("click", function () {
         clearModalAccount();
         openModal(modalAccount);
     });
-    $(data.btnOpenBillsModal).on("click", function() {
+    $(data.btnOpenBillsModal).on("click", function () {
         clearModalBills();
         openModal(modalBills);
     });
-    $(data.btnOpenCalModal).on("click", function() {
+    $(data.btnOpenCalModal).on("click", function () {
         openModal(modalCal);
     });
-    $(data.btnAccountDelete).on("click", function() {
+    $(data.btnAccountDelete).on("click", function () {
         deleteAccountConfirm();
     });
-    $(data.btnAccountUpdate).on("click", function() {
+    $(data.btnAccountUpdate).on("click", function () {
         writeNewAccount();
         closeModal(modalAccount);
     });
-    $(data.btnBillsUpdate).on("click", function() {
+    $(data.btnBillsUpdate).on("click", function () {
         closeModal(modalBills);
     });
-    $(data.btnCalUpdate).on("click", function() {
+    $(data.btnCalUpdate).on("click", function () {
         closeModal(modalCal);
     });
-    $(data.loadBillData).on("click", function(e) {
+    $(data.loadBillData).on("click", function (e) {
         loadBillData(e);
     });
-    $(data.loadCalData).on("click", function(e) {
+    $(data.loadCalData).on("click", function (e) {
         loadCalData(e);
     });
     getAccounts();
@@ -124,9 +124,10 @@ function clearAccountData() {
 };
 
 function loadAccountData(obj) {
+    console.log(obj);
     clearAccountData();
     let new_row = "";
-    $.each(obj.DATA, function(key, value) {
+    $.each(obj.DATA, function (key, value) {
         new_row = `<tr><td> ${value[1]} </td><td> ${value[4]} </td><td><a class = 'loadDetailedAccountData' id = 'account_${value[0]}' title = 'Edit'><i class = 'far fa-edit text-primary' id = 'i_${value[0]}'></i></a></td></tr></a>`;
         $('#tblAccounts > tbody:last-child').append(new_row);
     });
@@ -141,14 +142,14 @@ function loadDetailedAccountData(e) {
 
 function getAccounts() {
     $.ajax({
-            url: "cfc/bdgAccounts.cfc?method=getJson_Accounts",
-            method: "POST",
-            dataType: "json"
-        })
-        .done(function(data) {
+        url: "cfc/bdgAccounts.cfc?method=getJson_Accounts",
+        method: "POST",
+        dataType: "json"
+    })
+        .done(function (data) {
             loadAccountData(JSON.parse(data.responseText));
         })
-        .fail(function(jqXHR, textStatus) {
+        .fail(function (jqXHR, textStatus) {
             $.alert({
                 title: 'Alert!',
                 content: `Request failed: ${textStatus}`
@@ -165,12 +166,12 @@ function getAccountById(id) {
         },
         dataType: "json"
     });
-    request.done(function(msg) {
+    request.done(function (msg) {
         openModal(modalAccount);
         setModalAccountData(JSON.parse(request.responseText));
         writeToModalAccount();
     });
-    request.fail(function(jqXHR, textStatus) {
+    request.fail(function (jqXHR, textStatus) {
         $.alert({
             title: 'Alert!',
             content: `Request failed: ${textStatus}`
@@ -211,10 +212,10 @@ function writeNewAccount() {
         method: "POST",
         data: account_data
     });
-    request.done(function(msg) {
+    request.done(function (msg) {
         getAccounts();
     });
-    request.fail(function(jqXHR, textStatus) {
+    request.fail(function (jqXHR, textStatus) {
         $.alert({
             title: 'Alert!',
             content: `Request failed: ${textStatus}`
@@ -242,11 +243,11 @@ function deleteAccountConfirm() {
         buttons: {
             deleteAccount: {
                 text: 'delete account',
-                action: function() {
+                action: function () {
                     deleteAccount(account_data.account_id);
                 },
             },
-            cancelAction: function() {
+            cancelAction: function () {
                 $.alert({
                     title: 'Canceled.',
                     content: 'Action has been canceled.'
@@ -265,7 +266,7 @@ function deleteAccount(id) {
         },
         dataType: "html"
     });
-    request.done(function() {
+    request.done(function () {
         $.alert({
             title: 'Delete confirmation',
             content: 'Account deleted.'
@@ -273,7 +274,7 @@ function deleteAccount(id) {
         closeModal('modalAccount');
         getAccounts();
     });
-    request.fail(function(jqXHR, textStatus) {
+    request.fail(function (jqXHR, textStatus) {
         $.alert({
             title: 'Alert!',
             content: `Request failed: ${textStatus}`
@@ -295,13 +296,13 @@ function loadBillData(e) {
         },
         dataType: "json"
     });
-    request.done(function(msg) {
+    request.done(function (msg) {
         openModal(modalBills);
         setModalBillsData(JSON.parse(request.responseText));
         writeToModalBills();
 
     });
-    request.fail(function(jqXHR, textStatus) {
+    request.fail(function (jqXHR, textStatus) {
         $.alert({
             title: 'Alert!',
             content: `Request failed: ${textStatus}`
@@ -347,13 +348,13 @@ function loadCalData(e) {
         },
         dataType: "json"
     });
-    request.done(function(msg) {
+    request.done(function (msg) {
         openModal(modalCal);
         setModalCalData(JSON.parse(request.responseText));
         writeToModalCal();
 
     });
-    request.fail(function(jqXHR, textStatus) {
+    request.fail(function (jqXHR, textStatus) {
         $.alert({
             title: 'Alert!',
             content: `Request failed: ${textStatus}`
@@ -391,7 +392,7 @@ function clearModalCal() {
 // INIT    
 // ///////////////////////////////////
 function bindAccountEditButtons() {
-    $('.loadDetailedAccountData').on("click", function(e) {
+    $('.loadDetailedAccountData').on("click", function (e) {
         loadDetailedAccountData(e);
     });
 };
